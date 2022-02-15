@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import '../main.css'
+import CloseBtn from '../../assets/img/icons/close_black.svg'
+import LinkPin from '../../assets/img/icons/link-pin.svg'
 
 function DragAndDrop(props) {
 
@@ -115,28 +117,16 @@ function DragAndDrop(props) {
     }
     
     return (
-        <div style={{ display: 'inline-block' }} ref={dropRef}>
+        <div className='drag-n-drop-global-container' ref={dropRef}>
             {
                 !props.customUI && (
                     showFileUpload ? 
-                        <div>
-                            <div style={{
-                                    position: 'absolute',
-                                    right: 0,
-                                    left: 0,
-                                    textAlign: 'center',
-                                    color: 'grey',
-                                    fontSize: 36,
-                                    border: '0.1px solid grey',
-                                    height: '100%',
-                                    weight: '100%'
-                                }}
-                            >
-                                <div>drop here :)</div>
-                            </div>
-                        </div>
+                    <div className="drag-n-drop-container">
+                        <p>drop here :)</p>
+                    </div>
                     :
                         <>
+                        <div className="drag-n-drop-file-list-container">
                             <div className="button-wrap-file-list">
                                 <div className="file-list-align">
                                     <div className="file-list">
@@ -148,7 +138,9 @@ function DragAndDrop(props) {
                                                             {<img src={'https://pro.alchemdigital.com/api/extension-image/' + files[eachKey].name.split('.').pop()} alt="document" />}
                                                             <span className="filename-length">{files[eachKey].name.split('.').slice(0, -1).join('.')}</span><span className="extension">{'.' + files[eachKey].name.split('.').pop()}</span>
                                                         </div>
-                                                        <span className="upload-file-delete" data-file-index={eachKey} onClick={e => removeFile(e, eachKey)}>X</span>
+                                                        <span className="upload-file-delete" data-file-index={eachKey} onClick={e => removeFile(e, eachKey)}>
+                                                            <img src={CloseBtn} alt="close-btn"/>
+                                                        </span>
                                                     </div>
                                                 )
                                             })
@@ -156,10 +148,11 @@ function DragAndDrop(props) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="file-upload-align new-drag-n-drp-align">
+                            <div className="file-upload-btn">
                                 <input type="file" name="files" id="files-drag" onChange={e => handleChange(e)} multiple hidden />
-                                <label className="form-control-file" htmlFor="files-drag"> Add More</label>
+                                <label className="form-control-file" htmlFor="files-drag"><img src={LinkPin} alt="linkpin"/> Add More</label>
                             </div>
+                        </div>
                         </>
                 )
             }
