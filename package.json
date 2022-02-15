@@ -1,6 +1,6 @@
 {
   "name": "@alchemdigital/draganddrop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Drag and Drop for files upload",
   "author": "D.Bairavan",
   "license": "MIT",
@@ -55,5 +55,13 @@
     "@babel/cli": "^7.16.8",
     "@babel/core": "^7.16.12",
     "@babel/preset-env": "^7.16.11"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alchemdigital/draganddrop.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alchemdigital/draganddrop/issues"
+  },
+  "homepage": "https://github.com/alchemdigital/draganddrop#readme"
 }
