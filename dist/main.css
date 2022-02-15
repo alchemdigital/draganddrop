@@ -1,0 +1,105 @@
+.main-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 17px 25px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.close-btn{
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: transparent;
+  transition: 0.4s all ease;
+}
+
+.close-btn:hover{
+  background: #E9EAEA;
+  cursor: pointer;
+}
+
+.content-container{
+  padding: 8px 25px 9px 25px;
+  height: auto;
+  position: relative;
+}
+
+ul.list-header{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 450px;
+  padding-left: 0px;
+  margin-bottom: 0px;
+  list-style-type: none;
+  overflow-x: auto;
+  align-content: flex-start;
+}
+
+ul.list-header li.list{
+  padding: 5px 15px;
+  color: #3C4043;
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: normal; 
+  font-family: 'Roboto', sans-serif;
+  transition: 0.4s all ease;
+  border-radius: 3px;
+  margin-bottom: 0.4rem;
+  margin-right: 0.4rem;
+  display: flex;
+  align-items: center;
+  min-width: 9rem;
+    justify-content: center;
+    position: relative;
+}
+
+ul.list-header li.list:hover{
+  background-color: #F1F1F1;
+  cursor: pointer;
+}
+
+ul.list-header li.selected:hover,
+ul.list-header li.selected{
+  background-color: #F1F1F1;
+}
+
+ul.list-header li.selected .checked-icon{
+  opacity: 1;
+}
+
+.checked-icon{
+  opacity: 0;
+  transition: 0.4s all ease;
+  padding-right: 0.4rem;
+}
+
+.update-btn{
+  background: #F1F1F1;
+  font-size: 15px;
+  line-height: 19px;
+  font-weight: bold; 
+  padding: 10px 40px;
+  border-radius: 5px;
+  margin: 1rem 0;
+}
+
+.text-end{
+  text-align: right;
+}
+
+ul.list-header li.selected::before{
+  content: '';
+  display: block;
+  background-image: url(./tick.svg);
+  background-size: cover;
+  height: 15px;
+  width: 15px;
+  object-fit: contain;
+  position: absolute;
+  left: 10px;
+}
