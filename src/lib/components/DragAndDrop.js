@@ -1,81 +1,170 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import '../main.css'
 
-class DragAndDrop extends Component {
-    state = {
-        drag: false
-    }
-    dropRef = React.createRef()
-    handleDrag = (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-    }
-    handleDragIn = (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        this.dragCounter++
-        if (e.dataTransfer.items && e.dataTransfer.items.length > 0) {
-            this.setState({ drag: true })
+function DragAndDrop(props) {
+
+    const [files, setFiles] = useState([])
+    const [showFileUpload, setShowFileUpload] = useState(true)
+
+    const dropRef = useRef()
+
+    useEffect(() => {
+        const handleDragIn = (e) => {
+            e.preventDefault()
+            e.stopPropagation()
         }
-    }
-    handleDragOut = (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        this.dragCounter--
-        if (this.dragCounter === 0) {
-            this.setState({ drag: false })
+        dropRef.current.addEventListener('dragenter', handleDragIn)
+        return () => {
+            dropRef.current.removeEventListener('dragenter', handleDragIn)
         }
-    }
-    handleDrop = (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        this.setState({ drag: false })
-        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-            this.props.handleDrop(e.dataTransfer.files)
-            e.dataTransfer.clearData()
-            this.dragCounter = 0
+    })
+
+    useEffect(() => {
+        const handleDragOut = (e) => {
+            e.preventDefault()
+            e.stopPropagation()
         }
+
+        dropRef.current.addEventListener('dragleave', handleDragOut)
+        return () => {
+            dropRef.current.removeEventListener('dragleave', handleDragOut)
+        }
+    })
+
+    useEffect(() => {
+        const handleDrag = (e) => {
+            e.preventDefault()
+            e.stopPropagation()
+        }
+
+        dropRef.current.addEventListener('dragover', handleDrag)
+        return () => {
+            dropRef.current.removeEventListener('dragover', handleDrag)
+        }
+    })
+
+    useEffect(() => {
+        const handleDrop = (e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                let thisFiles = e.dataTransfer.files
+                let fileList = [...files]
+                Object.keys(thisFiles).map((eachKey) => {
+                    /* if (props.isSupportedFile(filesTemp[eachKey])) {
+                        if (filesTemp[eachKey].size / 1024 / 1024 <= allowedSingleFileSize.current) */
+                            fileList.push(thisFiles[eachKey])
+                        /* else
+                            Config.toast(singleFileSizeError.current, 'error')
+                    } */
+                })
+                setFiles(fileList)
+                setShowFileUpload(false)
+                if (props.handleDrop)
+                    props.handleDrop(fileList)
+                if (props.getFiles)
+                    props.getFiles(fileList)
+                e.dataTransfer.clearData()
+            }
+        }
+
+        dropRef.current.addEventListener('drop', handleDrop)
+        return () => {
+            dropRef.current.removeEventListener('drop', handleDrop)
+        }
+    })
+
+    const removeFile = (e, index) => {
+        if (props.removeFile)
+            props.removeFile(e, index)
+        let filesTemp = files
+        delete filesTemp[index]
+        let isFilesEmpty = true
+        let finalFiles = []
+        Object.keys(filesTemp).map((eachKey) => {
+            if (filesTemp[eachKey] != null) {
+                isFilesEmpty = false
+                finalFiles.push(filesTemp[eachKey])
+            }
+        })
+        if (isFilesEmpty) {
+            filesTemp = []
+            setShowFileUpload(true)
+        }
+        setFiles(finalFiles)
+        if (props.getFiles)
+            props.getFiles(finalFiles)
     }
-    componentDidMount() {
-        let div = this.dropRef.current
-        div.addEventListener('dragenter', this.handleDragIn)
-        div.addEventListener('dragleave', this.handleDragOut)
-        div.addEventListener('dragover', this.handleDrag)
-        div.addEventListener('drop', this.handleDrop)
+
+    const handleChange = (e) => {
+        let thisFiles = e.target.files
+        let fileList = [...files]
+        Object.keys(thisFiles).map((eachKey) => {
+            /* if (props.isSupportedFile(filesTemp[eachKey])) {
+                if (filesTemp[eachKey].size / 1024 / 1024 <= allowedSingleFileSize.current) */
+                    fileList.push(thisFiles[eachKey])
+            /* else
+                Config.toast(singleFileSizeError.current, 'error')
+        } */
+        })
+        setFiles(fileList)
+        if (props.handleDrop)
+            props.handleDrop(fileList)
+        if (props.getFiles)
+            props.getFiles(fileList)
     }
-    componentWillUnmount() {
-        let div = this.dropRef.current
-        div.removeEventListener('dragenter', this.handleDragIn)
-        div.removeEventListener('dragleave', this.handleDragOut)
-        div.removeEventListener('dragover', this.handleDrag)
-        div.removeEventListener('drop', this.handleDrop)
-    }
-    render() {
-        return (
-            <div
-                style={{ display: 'inline-block', width: '100%' }}
-                ref={this.dropRef}
-            >
-                {this.state.dragging &&
-                    <div>
-                        <div
-                            style={{
-                                position: 'absolute',
-                                top: '50%',
-                                right: 0,
-                                left: 0,
-                                textAlign: 'center',
-                                color: 'grey',
-                                fontSize: 36
-                            }}
-                        >
-                            <div>drop here :)</div>
+    
+    return (
+        <div style={{ display: 'inline-block' }} ref={dropRef}>
+            {
+                !props.customUI && (
+                    showFileUpload ? 
+                        <div>
+                            <div style={{
+                                    position: 'absolute',
+                                    right: 0,
+                                    left: 0,
+                                    textAlign: 'center',
+                                    color: 'grey',
+                                    fontSize: 36,
+                                    border: '0.1px solid grey',
+                                    height: '100%',
+                                    weight: '100%'
+                                }}
+                            >
+                                <div>drop here :)</div>
+                            </div>
                         </div>
-                    </div>
-                }
-                {this.props.children}
-            </div>
-        )
-    }
+                    :
+                        <>
+                            <div className="button-wrap-file-list">
+                                <div className="file-list-align">
+                                    <div className="file-list">
+                                        {
+                                            Object.keys(files).map((eachKey) => {
+                                                return (
+                                                    <div key={eachKey + files[eachKey].name} className="file-name-list">
+                                                        <div className="filename">
+                                                            {<img src={'https://pro.alchemdigital.com/api/extension-image/' + files[eachKey].name.split('.').pop()} alt="document" />}
+                                                            <span className="filename-length">{files[eachKey].name.split('.').slice(0, -1).join('.')}</span><span className="extension">{'.' + files[eachKey].name.split('.').pop()}</span>
+                                                        </div>
+                                                        <span className="upload-file-delete" data-file-index={eachKey} onClick={e => removeFile(e, eachKey)}>X</span>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="file-upload-align new-drag-n-drp-align">
+                                <input type="file" name="files" id="files-drag" onChange={e => handleChange(e)} multiple hidden />
+                                <label className="form-control-file" htmlFor="files-drag"> Add More</label>
+                            </div>
+                        </>
+                )
+            }
+        </div>
+    )
 }
+
 export default DragAndDrop
