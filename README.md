@@ -1,4 +1,4 @@
-# What is Multiselect
+# What is DragAndDrop
 
  You can use this component to let the user drag and drop files. You can do your own styling.
 
