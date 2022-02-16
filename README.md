@@ -45,6 +45,10 @@ It works fine with react and tested.
     }
 ```
 
+## Demo output
+![draganddrop_1](public/draganddrop_1.png)
+![draganddrop_2](public/draganddrop_2.png)
+
 ## Support
 
 Alchem Digital (bairavan@alchemdigital.com)

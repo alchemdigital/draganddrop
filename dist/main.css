@@ -6,22 +6,6 @@
   	border-bottom: 1px solid #E0E0E0;
 }
 
-.close-btn{
-  	height: 40px;
-  	width: 40px;
-  	display: flex;
-  	align-items: center;
-  	justify-content: center;
-  	border-radius: 50%;
-  	background: transparent;
-  	transition: 0.4s all ease;
-}
-
-.close-btn:hover{
- 	background: #E9EAEA;
-  	cursor: pointer;
-}
-
 .content-container{
   	padding: 8px 25px 9px 25px;
   	height: auto;
@@ -30,9 +14,7 @@
 
 .button-wrap-file-list{
     width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 0.5rem;
+	margin: 1rem 0px;
 }
 
 .button-wrap-file-list input[type="file"],
@@ -50,4 +32,88 @@
 .file-list-align{
   display: block;
   width: 100%;
+}
+
+.drag-n-drop-global-container{
+	width: 700px;
+	height: 400px;
+	border-radius: 10px;
+	border: 1px dashed #CED4DA;
+	overflow: auto;
+}
+
+.drag-n-drop-container{
+	width: 700px;
+	height: 400px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.drag-n-drop-container p{
+	font-size: 36px;
+}
+
+.drag-n-drop-file-list-container{
+	padding: 20px 30px;
+}
+
+.file-name-list{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: 12px;
+	margin-bottom: 16px;
+	border-bottom: 1px solid #CED4DA;
+}
+
+.file-name-list:last-child{
+	margin-bottom: 0px;
+}
+
+.filename{
+	display: flex;
+	align-items: center;
+}
+
+.filename .filename-length{
+	padding-left: 15px;
+}
+
+.upload-file-delete{
+	width: 25px;
+	height: 25px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: transparent;
+	border-radius: 50%;
+	transition: 0.4s all ease;
+	cursor: pointer;
+}
+
+.upload-file-delete:hover{
+	background-color: #EBEBEB;
+	transition: 0.4s all ease;
+}
+
+.file-upload-btn{
+	margin-top: 1rem;
+	padding: 10px;
+	background-color: transparent;
+	border-radius: 5px;
+	width: fit-content;
+	-moz-width: fit-content;
+	transition: 0.4s all ease;
+	cursor: pointer;
+}
+
+.file-upload-btn:hover{
+	background-color: #E8F0FE;
+	transition: 0.4s all ease;
+}
+
+.file-upload-btn label{
+	display: flex;
+	align-items: center;
 }

@@ -15,6 +15,12 @@ var _react = _interopRequireWildcard(require("react"));
 
 require("../main.css");
 
+var _close_black = _interopRequireDefault(require("../../assets/img/icons/close_black.svg"));
+
+var _linkPin = _interopRequireDefault(require("../../assets/img/icons/link-pin.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -125,23 +131,13 @@ function DragAndDrop(props) {
   };
 
   return /*#__PURE__*/_react.default.createElement("div", {
-    style: {
-      display: 'inline-block'
-    },
+    className: "drag-n-drop-global-container",
     ref: dropRef
-  }, !props.customUI && (showFileUpload ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
-    style: {
-      position: 'absolute',
-      right: 0,
-      left: 0,
-      textAlign: 'center',
-      color: 'grey',
-      fontSize: 36,
-      border: '0.1px solid grey',
-      height: '100%',
-      weight: '100%'
-    }
-  }, /*#__PURE__*/_react.default.createElement("div", null, "drop here :)"))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+  }, !props.customUI && (showFileUpload ? /*#__PURE__*/_react.default.createElement("div", {
+    className: "drag-n-drop-container"
+  }, /*#__PURE__*/_react.default.createElement("p", null, "drop here :)")) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+    className: "drag-n-drop-file-list-container"
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: "button-wrap-file-list"
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "file-list-align"
@@ -164,9 +160,12 @@ function DragAndDrop(props) {
       className: "upload-file-delete",
       "data-file-index": eachKey,
       onClick: e => removeFile(e, eachKey)
-    }, "X"));
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _close_black.default,
+      alt: "close-btn"
+    })));
   })))), /*#__PURE__*/_react.default.createElement("div", {
-    className: "file-upload-align new-drag-n-drp-align"
+    className: "file-upload-btn"
   }, /*#__PURE__*/_react.default.createElement("input", {
     type: "file",
     name: "files",
@@ -177,7 +176,10 @@ function DragAndDrop(props) {
   }), /*#__PURE__*/_react.default.createElement("label", {
     className: "form-control-file",
     htmlFor: "files-drag"
-  }, " Add More")))));
+  }, /*#__PURE__*/_react.default.createElement("img", {
+    src: _linkPin.default,
+    alt: "linkpin"
+  }), " Add More"))))));
 }
 
 var _default = DragAndDrop;
